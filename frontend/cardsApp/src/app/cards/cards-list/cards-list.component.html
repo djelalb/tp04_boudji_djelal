@@ -1,0 +1,7 @@
+<ul>
+    <li *ngFor="let card of cards(); let i = index">
+      {{ card.nom }} - {{ card.codePan | caviarder }} 
+      <button (click)="deleteCard(i)">Supprimer</button>
+    </li>
+  </ul>
+  
