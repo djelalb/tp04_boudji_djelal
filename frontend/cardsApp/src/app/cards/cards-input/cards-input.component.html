@@ -1,9 +1,12 @@
 <form [formGroup]="cardsForm" (ngSubmit)="onSubmit()">
-    <label>Nom : <input formControlName="nom" /></label>
-    <label>Code PAN : <input formControlName="codePan" /></label>
-    <label>CCV : <input formControlName="ccv" /></label>
-    <label>Mois : <input formControlName="mois" /></label>
-    <label>Année : <input formControlName="annee" /></label>
-    <button type="submit" [disabled]="cardsForm.invalid">Ajouter</button>
-  </form>
+  <label>Nom : <input formControlName="nom" /></label>
+  <label>Code PAN : <input formControlName="codePan" /></label>
+  <label>CCV : <input formControlName="ccv" /></label>
+  <label>Mois : <input formControlName="mois" /></label>
+  <label>Année : <input formControlName="annee" /></label>
   
+  <button type="submit" [disabled]="cardsForm.invalid">
+    {{ editMode ? 'Modifier' : 'Ajouter' }}
+  </button>
+  <button type="button" *ngIf="editMode" (click)="cancelEdit()">Annuler</button>
+</form>

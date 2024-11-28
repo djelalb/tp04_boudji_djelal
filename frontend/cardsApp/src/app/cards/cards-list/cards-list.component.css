@@ -48,4 +48,11 @@ button {
 button:hover {
     background-color: #4758a3;
 }
+
+button.btn-delete {
+    background: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
   

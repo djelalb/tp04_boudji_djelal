@@ -18,4 +18,8 @@ export class CardService {
   deleteCard(index: number) {
     this.cards.update(cards => cards.filter((_, i) => i !== index));
   }  
+
+  updateCard(index: number, updatedCard: { nom: string; codePan: string; ccv: string; mois: string; annee: string }) {
+    this.cards.update(cards => cards.map((card, i) => (i === index ? updatedCard : card)));
+  }
 }
