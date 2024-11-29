@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CardService } from '../services/card.service';
+import { FieldErrorDirective } from '../../directives/field-error.directive';
 
 @Component({
   selector: 'app-cards-input',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, FieldErrorDirective],
   templateUrl: './cards-input.component.html',
   styleUrls: ['./cards-input.component.css']
 })
@@ -27,25 +28,29 @@ export class CardsInputComponent {
   }
 
   onSubmit() {
-    if (this.cardsForm.valid) {
-      const card = {
-        nom: this.cardsForm.value.nom!,
-        codePan: this.cardsForm.value.codePan!,
-        ccv: this.cardsForm.value.ccv!,
-        mois: this.cardsForm.value.mois!,
-        annee: this.cardsForm.value.annee!,
-      };
-  
-      if (this.editMode && this.editIndex !== null) {
-        this.cardService.updateCard(this.editIndex, card);
-        this.editMode = false;
-        this.editIndex = null;
-      } else {
-        this.cardService.addCard(card);
-      }
-      this.cardsForm.reset();
+    if (this.cardsForm.invalid) {
+      this.cardsForm.markAllAsTouched();
+      return;
     }
+
+    const card = {
+      nom: this.cardsForm.value.nom!,
+      codePan: this.cardsForm.value.codePan!,
+      ccv: this.cardsForm.value.ccv!,
+      mois: this.cardsForm.value.mois!,
+      annee: this.cardsForm.value.annee!,
+    };
+
+    if (this.editMode && this.editIndex !== null) {
+      this.cardService.updateCard(this.editIndex, card);
+      this.editMode = false;
+      this.editIndex = null;
+    } else {
+      this.cardService.addCard(card);
+    }
+    this.cardsForm.reset();
   }
+
 
   editCard(index: number, card: { nom: string; codePan: string; ccv: string; mois: string; annee: string }) {
     this.editMode = true;
